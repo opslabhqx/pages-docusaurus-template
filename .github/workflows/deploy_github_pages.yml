@@ -30,6 +30,12 @@ jobs:
         with:
           path: build
 
+      - name: Run Slack Notification
+        if: always()
+        uses: opslabhqx/action-slacknotify@v1
+        with:
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+
   deploy:
     name: Deploy to GitHub Pages
     needs: build
@@ -47,3 +53,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Run Slack Notification
+        if: always()
+        uses: opslabhqx/action-slacknotify@v1
+        with:
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
